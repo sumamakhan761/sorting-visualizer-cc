@@ -34,3 +34,23 @@ Each sorting algorithm is implemented manually from scratch using TypeScript to 
 - **Framer Motion** (for animations)
 
 ---
+
+## 📦 Installation & Usage
+
+To run this project locally:
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/sorting-visualizer-cc-main.git
+
+# Navigate to the project directory
+cd sorting-visualizer-cc-main
+
+# Install dependencies
+npm install
+
+# Run the development server
+npm run dev
+```
+
+> Visit http://localhost:3000 in your browser to view the app.
