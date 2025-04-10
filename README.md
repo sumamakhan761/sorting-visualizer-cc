@@ -2,7 +2,7 @@
 
 The **Sorting Visualizer** is an interactive and educational web application that brings sorting algorithms to life through dynamic animations. Designed to help students and enthusiasts understand the core concepts of sorting, this visualizer combines modern web technologies with fundamental data structure and algorithm (DSA) knowledge.
 
-> Built with ❤️ by **Samarat**, **Krishna**, **Miran**, and **Sumama**
+> Built with ❤️ by **Samarat Kesharwani**, **Price Kela**, **Miran Khan**, and **Sumama Khan**
 
 ---
 
