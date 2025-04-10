@@ -13,3 +13,24 @@ The Sorting Visualizer is a dynamic web application built to demonstrate classic
 Each sorting algorithm is implemented manually from scratch using TypeScript to provide complete transparency and reinforce algorithmic fundamentals. Additionally, the application displays the time and space complexities (Best, Average, and Worst case) of each algorithm to deepen the learning experience.
 
 ---
+
+## ✨ Features
+
+- **Detailed Algorithm Descriptions**: Each sorting algorithm comes with a short description, helping users understand the logic behind it.
+- **Time Complexity Insights**: The visualizer displays the best, average, and worst-case time complexities for each algorithm.
+- **Manual Implementations in TypeScript**: All sorting algorithms are coded from scratch for educational clarity and review.
+- **One Algorithm at a Time**: Users can run one sorting algorithm at a time, with control buttons disabled during execution to prevent glitches.
+- **Speed Control**: Users can modify the speed of the animation to match their learning pace.
+- **Modular & Scalable Codebase**: Clean and well-structured code that is easy to expand with new features or algorithms.
+- **Smooth Animations with Tailwind CSS**: Visually engaging transitions powered by TailwindCSS for a seamless experience.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Next.js**
+- **TypeScript**
+- **Tailwind CSS**
+- **Framer Motion** (for animations)
+
+---
