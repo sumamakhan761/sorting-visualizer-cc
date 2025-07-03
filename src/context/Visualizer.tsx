@@ -46,24 +46,41 @@ export const SortingAlgorithmProvider = ({
     useState<number>(MAX_ANIMATION_SPEED);
   const requiresReset = isAnimationComplete || isSorting;
 
+  // Generate array on mount and on window resize
   useEffect(() => {
     resetArrayAndAnimation();
-    window.addEventListener("resize", resetArrayAndAnimation);
+
+    // Debounce resize event for better performance
+    let resizeTimeout: NodeJS.Timeout;
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        resetArrayAndAnimation();
+      }, 200);
+    };
+
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("resize", resetArrayAndAnimation);
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(resizeTimeout);
     };
   }, []);
 
   const resetArrayAndAnimation = () => {
     const contentContainer = document.getElementById("content-container");
     if (!contentContainer) return;
+
+    // Calculate array size based on screen width
     const contentContainerWidth = contentContainer.clientWidth;
+    const isMobile = window.innerWidth < 640;
 
     const tempArray: number[] = [];
-    const numLines = contentContainerWidth / 8;
+    // Adjust number of bars based on screen size
+    const numLines = isMobile ? contentContainerWidth / 5 : contentContainerWidth / 8;
     const containerHeight = window.innerHeight;
-    const maxLineHeight = Math.max(containerHeight - 420, 100);
+    const maxLineHeight = Math.max(containerHeight - (isMobile ? 350 : 420), 100);
+
     for (let i = 0; i < numLines; i++) {
       tempArray.push(generateRandomNumberFromInterval(35, maxLineHeight));
     }
@@ -72,16 +89,19 @@ export const SortingAlgorithmProvider = ({
     setIsSorting(false);
     setIsAnimationComplete(false);
 
+    // Clear all timeouts and intervals
     const highestId = window.setTimeout(() => {
       for (let i = highestId; i >= 0; i--) {
         window.clearInterval(i);
+        window.clearTimeout(i);
       }
     }, 0);
 
+    // Reset array line colors
     setTimeout(() => {
       const arrLines = document.getElementsByClassName("array-line");
       for (let i = 0; i < arrLines.length; i++) {
-        arrLines[i].classList.remove("change-line-color");
+        arrLines[i].classList.remove("change-line-color", "pulse-animation");
         arrLines[i].classList.add("default-line-color");
       }
     }, 0);
@@ -90,29 +110,37 @@ export const SortingAlgorithmProvider = ({
   const runAnimation = (animations: AnimationArrayType) => {
     setIsSorting(true);
 
+    // Calculate animation speed based on the slider value
     const inverseSpeed = (1 / animationSpeed) * 200;
     const arrLines = document.getElementsByClassName(
       "array-line"
     ) as HTMLCollectionOf<HTMLElement>;
 
+    // Helper function to update class list
     const updateClassList = (
       indexes: number[],
       addClassName: string,
       removeClassName: string
     ) => {
       indexes.forEach((index) => {
-        arrLines[index].classList.add(addClassName);
-        arrLines[index].classList.remove(removeClassName);
+        if (arrLines[index]) {
+          arrLines[index].classList.add(addClassName);
+          arrLines[index].classList.remove(removeClassName);
+        }
       });
     };
 
+    // Helper function to update height
     const updateHeightValue = (
       lineIndex: number,
       newHeight: number | undefined
     ) => {
-      arrLines[lineIndex].style.height = `${newHeight}px`;
+      if (arrLines[lineIndex]) {
+        arrLines[lineIndex].style.height = `${newHeight}px`;
+      }
     };
 
+    // Run animations with proper timing
     animations.forEach((animation, index) => {
       setTimeout(() => {
         const [lineIndexes, isSwap] = animation;
@@ -138,6 +166,7 @@ export const SortingAlgorithmProvider = ({
       }, index * inverseSpeed);
     });
 
+    // Final animation when sorting is complete
     const finalTimeout = animations.length * inverseSpeed;
     setTimeout(() => {
       Array.from(arrLines).forEach((line) => {
