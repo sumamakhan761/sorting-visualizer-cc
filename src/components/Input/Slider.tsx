@@ -16,8 +16,8 @@ export const Slider = ({
   isDisabled?: boolean;
 }) => {
   return (
-    <div className="flex gap-2 items-center justify-center">
-      <span className="text-center text-gray-300">Slow</span>
+    <div className="flex gap-2 items-center justify-center w-full max-w-[180px]">
+      <span className="text-xs sm:text-sm font-medium text-gray-200 whitespace-nowrap">Slow</span>
       <input
         disabled={isDisabled}
         type="range"
@@ -26,9 +26,9 @@ export const Slider = ({
         step={step}
         value={value}
         onChange={(e) => handleChange(e)}
-        className="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gray-700"
+        className={`w-full h-2 rounded-lg appearance-none cursor-pointer ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
       />
-      <span className="text-center text-gray-300">Fast</span>
+      <span className="text-xs sm:text-sm font-medium text-gray-200 whitespace-nowrap">Fast</span>
     </div>
   );
 };
